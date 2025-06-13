@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vessel {
+  id         Int      @id @default(autoincrement())
+  name       String
+  imoNo      Int      @unique
+  vesselType Int
+  maxDeadWg  Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  dailyEmissions DailyLogEmission[]
+
+  @@map("vessels")
+}
+
+model DailyLogEmission {
+  eid      Int      @id @default(autoincrement()) @map("EID")
+  vesselId Int
+  logId    BigInt
+  fromUtc  DateTime
+  toUtc    DateTime
+
+  // CO2 emissions
+  metCo2  Float
+  aetCo2  Float
+  botCo2  Float
+  vrtCo2  Float
+  totTCo2 Float
+
+  // CO2e emissions
+  mewCo2e  Float
+  aewCo2e  Float
+  bowCo2e  Float
+  vrwCo2e  Float
+  totWCo2e Float
+
+  // SOx emissions
+  meSox  Float
+  aeSox  Float
+  boSox  Float
+  vrSox  Float
+  totSox Float
+
+  // NOx emissions
+  meNox  Float
+  aeNox  Float
+  totNox Float
+
+  // PM10 emissions
+  mePm10  Float
+  aePm10  Float
+  totPm10 Float
+
+  // Efficiency indicators
+  aerCo2T2w   Float
+  aerCo2eW2w  Float
+  eeoiCo2eW2w Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  vessel Vessel @relation(fields: [vesselId], references: [imoNo])
+
+  @@index([vesselId, toUtc])
+  @@map("daily_log_emissions")
+}
+
+model PPreference {
+  rowId        Int    @id @map("RowID")
+  category     String
+  vesselTypeId Int
+  size         String
+  traj         String
+  a            Float
+  b            Float
+  c            Float
+  d            Float
+  e            Float
+
+  @@index([vesselTypeId, traj])
+  @@map("p_preferences")
+}
+
+// Create extended client with virtual relationships
+const prismaExtended = prisma.$extends({
+result: {
+vessel: {
+pPreferences: {
+needs: { vesselType: true },
+compute(vessel) {
+return prisma.pPreference.findMany({
+where: {
+vesselTypeId: vessel.vesselType,
+category: "PP"
+}
+});
+}
+}
+}
+}
+});
+
+// Usage
+const vessel = await prismaExtended.vessel.findUnique({
+where: { imoNo: 9836476 }
+});
+
+const ppReferences = await vessel.pPreferences; // Virtual relationship!
