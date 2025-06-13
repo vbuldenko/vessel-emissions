@@ -6,9 +6,14 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate",
+    "db:seed": "tsx src/lib/db/seed.ts",
+    "db:reset": "prisma migrate reset && npm run db:seed",
+    "db:view": "prisma studio"
   },
   "dependencies": {
+    "@prisma/client": "^6.9.0",
     "decimal.js": "^10.5.0",
     "next": "15.3.3",
     "react": "^19.0.0",
@@ -22,7 +27,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
+    "prisma": "^6.9.0",
     "tailwindcss": "^4",
+    "tsx": "^4.20.3",
     "typescript": "^5"
   }
 }
