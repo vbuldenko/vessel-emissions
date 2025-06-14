@@ -8,13 +8,18 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
+    "db:migrate": "prisma migrate dev --name init",
+    "db:migrate-reset": "prisma migrate reset",
     "db:seed": "tsx src/lib/db/seed.ts",
     "db:reset": "prisma migrate reset && npm run db:seed",
     "db:view": "prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^6.9.0",
+    "@types/highcharts": "^5.0.44",
     "decimal.js": "^10.5.0",
+    "highcharts": "^12.2.0",
+    "highcharts-react-official": "^3.2.2",
     "next": "15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

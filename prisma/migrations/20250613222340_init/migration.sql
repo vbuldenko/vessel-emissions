@@ -54,7 +54,7 @@ CREATE TABLE "pp_references" (
     "category" TEXT NOT NULL,
     "vesselTypeId" INTEGER NOT NULL,
     "size" TEXT NOT NULL,
-    "traj" TEXT NOT NULL,
+    "Traj" TEXT NOT NULL,
     "a" DOUBLE PRECISION NOT NULL,
     "b" DOUBLE PRECISION NOT NULL,
     "c" DOUBLE PRECISION NOT NULL,
@@ -71,7 +71,7 @@ CREATE UNIQUE INDEX "vessels_imoNo_key" ON "vessels"("imoNo");
 CREATE INDEX "emission_logs_vesselId_toUtc_idx" ON "emission_logs"("vesselId", "toUtc");
 
 -- CreateIndex
-CREATE INDEX "pp_references_vesselTypeId_traj_idx" ON "pp_references"("vesselTypeId", "traj");
+CREATE INDEX "pp_references_vesselTypeId_Traj_idx" ON "pp_references"("vesselTypeId", "Traj");
 
 -- AddForeignKey
 ALTER TABLE "emission_logs" ADD CONSTRAINT "emission_logs_vesselId_fkey" FOREIGN KEY ("vesselId") REFERENCES "vessels"("imoNo") ON DELETE RESTRICT ON UPDATE CASCADE;

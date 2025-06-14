@@ -73,7 +73,7 @@ model Reference {
   category     String
   vesselTypeId Int
   size         String
-  traj         String
+  traj         String @map("Traj")
   a            Float
   b            Float
   c            Float
