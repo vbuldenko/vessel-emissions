@@ -267,7 +267,7 @@ export default function VesselEmissionsChart({
       shadow: true,
       formatter: function (this: any) {
         const point = this.point;
-        const isDeviation = this.series.name === "Deviation from Baseline";
+        const isDeviation = this.series.name === "Deviation";
 
         if (isDeviation) {
           const statusColor =
