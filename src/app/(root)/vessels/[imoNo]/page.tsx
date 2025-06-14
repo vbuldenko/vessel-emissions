@@ -6,9 +6,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 interface VesselDetailsPageProps {
-  params: {
+  params: Promise<{
     imoNo: string;
-  };
+  }>;
 }
 
 export default async function VesselDetailsPage({

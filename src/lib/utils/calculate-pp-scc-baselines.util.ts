@@ -1,9 +1,9 @@
-import { CE_PPSCCReferenceLine } from "@prisma/client";
+import { Reference } from "@/generated/prisma";
 import Decimal from "decimal.js";
 
 type PPSSCPreferenceLine = Omit<
-  CE_PPSCCReferenceLine,
-  "RowID" | "Category" | "VesselTypeID" | "Size"
+  Reference,
+  "rowId" | "category" | "vesselTypeId" | "size"
 >;
 
 type CalculatePPBaselinesArgs = {
@@ -23,7 +23,7 @@ const yxLowF = 0.33;
 const yxUpF = 1.67;
 
 const emptyFactor = {
-  Traj: "",
+  traj: "",
   a: 0,
   b: 0,
   c: 0,
